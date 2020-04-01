@@ -51,7 +51,7 @@ class Powell():
     def __init__(self, seed = None):
         if seed:
             torch.manual_seed(seed)
-        self.xstart = torch.tensor([3,-1,0,1])
+        self.xstart = torch.tensor([3,-1,0,1], dtype = torch.float64)
 
     def val(self,tensor):
         x1, x2, x3, x4 = tensor
@@ -72,7 +72,7 @@ class StochasticPowell():
     def __init__(self, seed = None, noise = 1):
         if seed:
             torch.manual_seed(seed)
-        self.xstart = torch.tensor([3,-1,0,1])
+        self.xstart = torch.tensor([3,-1,0,1], dtype = torch.float64)
         self.noise = noise
 
     def val(self,tensor):
