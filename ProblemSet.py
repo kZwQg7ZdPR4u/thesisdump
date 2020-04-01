@@ -32,7 +32,7 @@ class Powell():
 
     def val(self,tensor):
         x1, x2, x3, x4 = tensor
-        return (x1 + 10*x2)**2 + 5*(x3-x4)**4 + 10*(x1-x4)**4
+        return (x1 + 10*x2)**2 + 5*(x3-x4)**4 + (x2 - 2*x3)**4 + 10*(x1-x4)**4
 
     def x_start(self):
         x = self.xstart.detach()
