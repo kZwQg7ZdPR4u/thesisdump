@@ -19,7 +19,7 @@ def loss_plot(log, plot_type = "linear"):
         plt.xlabel("iterations")
         plt.ylabel("f(x),    lower=better")
         plt.yscale(plot_type)
-
+        plt.xscale(plot_type)
         plt.plot(t,y, label= optimizer_name)
     plt.legend()
     plt.show()
