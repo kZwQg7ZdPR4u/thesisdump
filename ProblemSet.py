@@ -62,6 +62,11 @@ class ThreeHumpCamel():
         x = self.xstart.detach()
         x.requires_grad = True
         return x
+    
+    def min(self):
+        xmin = torch.tensor([0,0])
+        fmin = torch.tensor(0)
+        return xmin, fmin
 
 class SixHumpCamel():
 
