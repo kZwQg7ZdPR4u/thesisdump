@@ -22,27 +22,6 @@ class Rosenbrock():
         xmin = torch.tensor([1,1])
         fmin = torch.tensor(0)
         return xmin, fmin
-
-class Powell():
-
-    def __init__(self, seed = None):
-        if seed:
-            torch.manual_seed(seed)
-        self.xstart = torch.randn((4,1)) * 5
-
-    def val(self,tensor):
-        x1, x2, x3, x4 = tensor
-        return (x1 + 10*x2)**2 + 5*(x3-x4)**4 + (x2 - 2*x3)**4 + 10*(x1-x4)**4
-
-    def x_start(self):
-        x = self.xstart.detach()
-        x.requires_grad = True
-        return x
-
-    def min(self):
-        xmin = torch.tensor([0,0,0,0])
-        fmin = torch.tensor(0)
-        return xmin, fmin
     
 class StochasticRosenbrock():
 
@@ -67,12 +46,33 @@ class StochasticRosenbrock():
         fmin = torch.tensor(0)
         return xmin, fmin
 
+class Powell():
+
+    def __init__(self, seed = None):
+        if seed:
+            torch.manual_seed(seed)
+        self.xstart = torch.tensor([3,-1,0,1])
+
+    def val(self,tensor):
+        x1, x2, x3, x4 = tensor
+        return (x1 + 10*x2)**2 + 5*(x3-x4)**4 + (x2 - 2*x3)**4 + 10*(x1-x4)**4
+
+    def x_start(self):
+        x = self.xstart.detach()
+        x.requires_grad = True
+        return x
+
+    def min(self):
+        xmin = torch.tensor([0,0,0,0])
+        fmin = torch.tensor(0)
+        return xmin, fmin
+
 class StochasticPowell():
 
     def __init__(self, seed = None, noise = 1):
         if seed:
             torch.manual_seed(seed)
-        self.xstart = torch.randn((4,1)) * 5
+        self.xstart = torch.tensor([3,-1,0,1])
         self.noise = noise
 
     def val(self,tensor):
@@ -93,6 +93,7 @@ class StochasticPowell():
         xmin = torch.tensor([0,0,0,0])
         fmin = torch.tensor(0)
         return xmin, fmin
+
 
 class ThreeHumpCamel():
 
