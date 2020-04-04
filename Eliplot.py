@@ -7,7 +7,7 @@ from matplotlib.patches import Ellipse
 from IPython.display import HTML
 
 
-def loss_plot(log, plot_type = "linear"):
+def loss_plot(log, xscale = "linear", yscale = "linear"):
 
     optimizer_names = log["optimizer_names"]
 
@@ -18,8 +18,8 @@ def loss_plot(log, plot_type = "linear"):
         y = log[optimizer_name]["y"]
         plt.xlabel("iterations")
         plt.ylabel("f(x),    lower=better")
-        plt.yscale(plot_type)
-        plt.xscale(plot_type)
+        plt.yscale(yscale)
+        plt.xscale(xscale)
         plt.plot(t,y, label= optimizer_name)
     plt.legend()
     plt.show()
