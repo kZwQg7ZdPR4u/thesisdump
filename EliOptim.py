@@ -1,3 +1,5 @@
+import torch
+
 class EliOptimizer():
     """Fast second-order optimizer.
 
