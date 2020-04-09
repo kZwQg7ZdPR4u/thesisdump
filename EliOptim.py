@@ -13,11 +13,10 @@ class EliOptimizer():
         lamb_2: regularizer (default: 1)
         lr: learning rate (default: 1e-4)
         tmin: burn-in period (default: 30)
-        device: (default: "cpu")
     """
 
 
-    def __init__(self, parameters, gamma = 0.9, lamb_1 = 0.1, lamb_2 = 1, lr = 1e-4, tmin = 30, device ="cpu"):
+    def __init__(self, parameters, gamma = 0.9, lamb_1 = 0.1, lamb_2 = 1, lr = 1e-4, tmin = 30):
 
         self.param_groups = []
         self.a_groups = []
@@ -25,13 +24,14 @@ class EliOptimizer():
         self.d_groups = []
         self.e_groups = []
 
-        self.c = torch.zeros(1, dtype = torch.float64).to(device)
         for param in parameters:
             self.param_groups.append(param)
-            self.a_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(device))
-            self.b_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(device))
-            self.d_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(device))
-            self.e_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(device))
+            self.a_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(param.device))
+            self.b_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(param.device))
+            self.d_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(param.device))
+            self.e_groups.append(torch.zeros(param.shape, dtype = torch.float64).to(param.device))
+        self.c = torch.zeros(1, dtype = torch.float64).to(param.device)
+
         self.lr = lr
         self.gamma = gamma
         self.lamb_1 = lamb_1
