@@ -45,6 +45,31 @@ class StochasticRosenbrock():
         xmin = torch.tensor([1,1])
         fmin = torch.tensor(0)
         return xmin, fmin
+    
+class AggmoToyProblem():
+
+    def __init__(self):
+        self.xstart = torch.tensor([-2,0], dtype = torch.float64)
+        self.a = 8
+        self.b = 10
+        self.fmin = self.val(torch.tensor([0.,0.], dtype = torch.float64))
+
+    def val(self,tensor):
+        x, y = tensor
+        a = self.a
+        b = self.b
+        return torch.log(torch.exp(x) + torch.exp(-x)) + b*torch.log(torch.exp(torch.exp(x)*(y-torch.sin(a*x)))+torch.exp(-torch.exp(x)*(y-torch.sin(a*x))))
+
+    def x_start(self):
+        x = self.xstart.detach()
+        # x.requires_grad = True
+        return x
+
+    def min(self):
+        xmin = torch.tensor([0,0])
+        fmin = self.fmin
+        return xmin, fmin
+
 
 class Powell():
 
