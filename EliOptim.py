@@ -8,15 +8,15 @@ class EliOptimizer():
     Saddle Free Newton Raphson, but also has low computational cost.
 
     Arguments:
-        gamma: decay (default: 0.9)
-        lamb_1: dampening (default: 0.1)
+        gamma: decay (default: 0.7)
+        lamb_1: dampening (default: 0.3)
         lamb_2: regularizer (default: 1)
         lr: learning rate (default: 1e-4)
         tmin: burn-in period (default: 30)
     """
 
 
-    def __init__(self, parameters, gamma = 0.9, lamb_1 = 0.1, lamb_2 = 1, lr = 1e-4, tmin = 30):
+    def __init__(self, parameters, gamma = 0.9, lamb_1 = 0.1, lamb_2 = 1, lr = 1e-4, tmin = 30, running_mean = True):
 
         self.param_groups = []
         self.a_groups = []
@@ -39,6 +39,7 @@ class EliOptimizer():
         self.t = 0
         self.eps = 10**(-12)
         self.tmin = tmin
+        self.running_mean = running_mean
 
 
     def step(self):
@@ -58,7 +59,10 @@ class EliOptimizer():
                  param.data -= self.lr * param.grad.data
             else:
                 h = torch.abs((self.c * d - b * e) / (a * self.c - b**2 + self.eps))
-                param.data -= self.lamb_1 * param.grad.data / (h + self.lamb_2)
+                if self.running_mean:
+                    param.data -= self.lamb_1 * (e / self.c) / (h + self.lamb_2)
+                else:
+                    param.data -= self.lamb_1 * param.grad.data / (h + self.lamb_2)
 
     def zero_grad(self):
         """Clears the gradients of all optimized"""
