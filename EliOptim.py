@@ -16,7 +16,7 @@ class EliOptimizer():
     """
 
 
-    def __init__(self, parameters, gamma = 0.9, lamb_1 = 0.1, lamb_2 = 1, lr = 1e-4, tmin = 30, running_mean = True):
+    def __init__(self, parameters, gamma = 0.9, lamb_1 = 0.1, lamb_2 = 1, lr = 1e-4, tmin = 30, running_mean = True, eps = 10**(-12):
 
         self.param_groups = []
         self.a_groups = []
@@ -37,7 +37,7 @@ class EliOptimizer():
         self.lamb_1 = lamb_1
         self.lamb_2 = lamb_2
         self.t = 0
-        self.eps = 10**(-12)
+        self.eps = eps
         self.tmin = tmin
         self.running_mean = running_mean
 
