@@ -7,7 +7,7 @@ class Rosenbrock():
     def __init__(self, seed = None):
         if seed:
             torch.manual_seed(seed)
-        self.xstart = torch.randn((2,1)) * 5
+        self.xstart = torch.randn((2,1)) * 0
 
     def val(self,tensor):
         x, y = tensor
