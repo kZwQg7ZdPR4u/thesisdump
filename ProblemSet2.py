@@ -9,10 +9,11 @@ class StochasticRosenbrock(nn.Module):
             torch.manual_seed(seed)
         self.noise = noise
 
+
     def forward(self,tensor):
         x, y = tensor
-        epsilon = torch.rand(1) * self.noise
-        return (1 - x) ** 2 + 100 * epsilon * (y - x ** 2) ** 2
+        self.epsilon = torch.rand(1) * self.noise
+        return (1 - x) ** 2 + 100 * self.epsilon * (y - x ** 2) ** 2
 
     def x_start(self):
         x = torch.zeros((2,1), dtype = torch.float64)
@@ -23,6 +24,13 @@ class StochasticRosenbrock(nn.Module):
         xmin = torch.tensor([1.,1.], dtype = torch.float64)
         fmin = torch.tensor([0.], dtype = torch.float64)
         return xmin, fmin
+    
+    def hessian(self, tensor):
+        x1, x2 = tensor
+        h1 = 2 + self.epsilon* 1200*x1**2 -  self.epsilon* 400*x2
+        h2 = 200 * self.epsilon
+        h12 = -400 * x1 * self.epsilon
+        return torch.tensor([[h1, h12], [h12, h2]])
 
 class Rosenbrock(nn.Module):
 
